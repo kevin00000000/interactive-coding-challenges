@@ -7,6 +7,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.env/
 env/
 build/
 develop-eggs/
@@ -61,3 +62,6 @@ scratch/
 
 # IPython Notebook templates
 template.ipynb
+
+# Editor
+.vscode/
