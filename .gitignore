@@ -65,3 +65,4 @@ template.ipynb
 
 # Editor
 .vscode/
+.envFile

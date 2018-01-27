@@ -1,5 +1,19 @@
 from nose.tools import assert_equal, assert_raises
+class Solution(object):
 
+    def two_sum(self, nums, val):
+        #TODO: Implement me
+        if nums is None or val is None:
+            raise TypeError
+        if not nums:
+            raise ValueError
+        cache = {}
+        for index, value in enumerate(nums):
+            if cache.get(val-value):
+                return [cache[val-value], index]
+            else:
+                cache[value] = index
+        return None
 
 class TestTwoSum(object):
 

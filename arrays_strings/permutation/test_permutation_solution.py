@@ -1,6 +1,29 @@
 from nose.tools import assert_equal
 
 
+class  Permutations(object):
+    def is_permutation(self, s1, s2):
+        if s1 is None or s2 is None:
+            return False
+        l1 = list(s1)
+        l1.sort()
+        l2 = list(s2)
+        l2.sort()
+        return l1 == l2
+
+class PermutationsAlt(object):
+    def is_permutation(self, s1, s2):
+        if s1 is None or s2 is None:
+            return False
+        d1 = {}
+        d2 = {}
+        for c in s1:
+            d1[c] = d1.get(c, 0)+1
+        for c in s2:
+            d2[c] = d2.get(c, 0)+1
+        return d1 == d2
+
+
 class TestPermutation(object):
 
     def test_permutation(self, func):

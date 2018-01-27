@@ -1,6 +1,16 @@
 from nose.tools import assert_equal
 
 
+class ReverseString(object):
+
+    def reverse(self, chars):
+        if chars is None:
+            return None
+        length = len(chars)
+        for i in range(length//2):
+            chars[i], chars[length-i-1] = chars[length-i-1] , chars[i]
+        return chars
+
 class TestReverse(object):
 
     def test_reverse(self, func):
