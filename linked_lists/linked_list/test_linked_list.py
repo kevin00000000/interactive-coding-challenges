@@ -1,4 +1,5 @@
 from nose.tools import assert_equal
+from linked_list_k import LinkedList, Node
 
 
 class TestLinkedList(object):
