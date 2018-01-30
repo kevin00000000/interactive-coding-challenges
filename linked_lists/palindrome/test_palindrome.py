@@ -1,4 +1,27 @@
 from nose.tools import assert_equal
+from linked_list import LinkedList, Node
+
+
+class MyLinkedList(LinkedList):
+    def is_palindrome(self):
+        if self.head is None or self.head.next is None:
+            return False
+        reverse = MyLinkedList()
+        temp = self.head
+        count = 0
+        while temp is not None:
+            reverse.insert_to_front(temp.data)
+            temp = temp.next
+            count += 1
+        temp_ori = self.head
+        temp_rev = reverse.head
+        for _ in range(count//2):
+            if temp_ori.data != temp_rev.data:
+                return False
+            temp_ori = temp_ori.next
+            temp_rev = temp_rev.next
+        return True
+        
 
 
 class TestPalindrome(object):

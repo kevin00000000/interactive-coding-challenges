@@ -1,5 +1,55 @@
 from nose.tools import assert_equal
+from linked_list import LinkedList, Node
 
+
+class MyLinkedList(LinkedList):
+    def kth_to_last_elem(self, k):
+        if self.head is None:
+            return None
+        x = 0
+        odd = True
+        slow = self.head
+        fast = self.head
+        while fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+            x += 1
+            if fast is None:
+                odd = False
+                break
+        if odd:
+            count = 2*x+1
+        else:
+            count = 2*x
+        if k+1>count:
+            return None
+        if count-k-1>x:
+            while count-k-1>x:
+                slow = slow.next
+                x+=1
+        elif count-k-1<x:
+            slow = slow.head
+            x = 0
+            while x<count-k-1:
+                slow = slow.next
+                x += 1
+        return slow.data
+
+
+class MyLinkedList_solution(LinkedList):
+    def kth_to_last_elem(self, k):
+        if self.head is None:
+            return None
+        slow = self.head
+        fast = self.head
+        for _ in range(k):
+            fast = fast.next
+            if fast is None:
+                return None
+        while fast.next is not None:
+            slow = slow.next
+            fast = fast.next
+        return slow.data
 
 class Test(object):
 

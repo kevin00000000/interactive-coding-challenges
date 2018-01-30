@@ -1,4 +1,22 @@
 from nose.tools import assert_equal
+from linked_list import LinkedList, Node
+
+
+class MyLinkedList(LinkedList):
+    def remove_dupes(self):
+        if self.head is None or self.head.next is None:
+            return
+        mark = set()
+        temp = self.head
+        last = self.head
+        while temp is not None:
+            if temp.data not in mark:
+                mark.add(temp.data)
+                last = temp
+                temp = temp.next
+            else:
+                last.next = temp.next
+                temp = temp.next
 
 
 class TestRemoveDupes(object):

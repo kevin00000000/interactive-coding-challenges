@@ -1,4 +1,38 @@
 from nose.tools import assert_equal
+from linked_list import LinkedList, Node
+
+
+class MyLinkedList(LinkedList):
+    def partition(self, data):
+        if self.head is None:
+            return self
+        less = MyLinkedList()
+        more = MyLinkedList()
+        equal = MyLinkedList()
+        result = MyLinkedList()
+        temp = self.head
+        while temp is not None:
+            if temp.data < data:
+                less.insert_to_front(temp.data)
+            elif temp.data > data:
+                more.insert_to_front(temp.data)
+            else:
+                equal.insert_to_front(temp.data)
+            temp = temp.next
+        temp = more.head
+        while temp is not None:
+            result.insert_to_front(temp.data)
+            temp = temp.next
+        temp = equal.head
+        while temp is not None:
+            result.insert_to_front(temp.data)
+            temp = temp.next
+        temp = less.head
+        while temp is not None:
+            result.insert_to_front(temp.data)
+            temp = temp.next
+        self.head = result.head
+        return self
 
 
 class TestPartition(object):
