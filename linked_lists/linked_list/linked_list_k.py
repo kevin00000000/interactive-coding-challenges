@@ -25,18 +25,21 @@ class LinkedList(object):
     def insert_to_front(self, data):
         if data is None:
             return
-        self.head = Node(data, self.head)
+        node = Node(data, self.head)
+        self.head = node
+        return node
     
     def append(self, data):
         if data is None:
             return
         if self.head is None:
             self.head = Node(data)
-            return
+            return self.head
         temp = self.head
         while temp.next_node is not None:
             temp = temp.next_node
         temp.next_node = Node(data)
+        return temp.next_node
 
     def find(self, data):
         temp = self.head

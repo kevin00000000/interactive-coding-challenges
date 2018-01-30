@@ -1,4 +1,16 @@
 from nose.tools import assert_equal
+from linked_list_k import LinkedList, Node
+
+
+class MyLinkedList(LinkedList):
+    def delete_node(self, node):
+        if node is None:
+            return
+        if node.next_node is None:
+            node.data = None
+        else:
+            node.data = node.next_node.data
+            node.next_node = node.next_node.next_node
 
 
 class TestDeleteNode(object):

@@ -2,7 +2,7 @@ from nose.tools import assert_equal
 from linked_list_k import LinkedList, Node
 
 
-class MyLinkedList(LinkedList):
+class MyLinkedList_iter(LinkedList):
     def __init__(self, head=None):
         super().__init__(head)
     
@@ -18,8 +18,8 @@ class MyLinkedList(LinkedList):
             second_num = temp_second.data if temp_second is not None else 0
             result.append((first_num+second_num) % 10)
             carry.append((first_num+second_num) // 10)
-            temp_first = temp_first if temp_first.next_node else None
-            temp_second = temp_second if temp_second.next_node else None
+            temp_first = temp_first.next_node if temp_first else None
+            temp_second = temp_second.next_node if temp_second else None
         if len(result) == 0:
             return result
         temp = result.head.next_node
@@ -34,6 +34,29 @@ class MyLinkedList(LinkedList):
         if carry[index] == 1:
             result.append(1)
         return result
+
+
+class MyLinkedList(LinkedList):
+    def add_reverse(self, first_list, second_list):
+        if first_list is None or second_list is None:
+            return None
+        carry = 0
+        head = self._add_reverse(first_list.head, second_list.head, carry)
+        return LinkedList(head)
+
+    def _add_reverse(self, first_node, second_node, carry):
+        if first_node is None and second_node is None and not carry:
+            return None
+        first_num = first_node.data if first_node is not None else 0
+        second_num = second_node.data if second_node is not None else 0
+        node = Node((first_num+second_num+carry)%10)
+        carry = (first_num + second_num+carry)//10
+        first_node = first_node.next_node if first_node is not None else None
+        second_node = second_node.next_node if second_node is not None else None
+        node.next_node = self._add_reverse(first_node, second_node, carry)
+        return node
+
+
 
 
 class TestAddReverse(object):
