@@ -1,4 +1,31 @@
 from nose.tools import assert_equal
+from stack import Stack
+import sys
+
+
+class StackMin(Stack):
+    def __init__(self, top=None):
+        super().__init__(top)
+        self.min_stack = Stack()
+        self.cur_min = sys.maxsize
+    
+    def minimum(self):
+        if self.is_empty():
+            return sys.maxsize
+        return self.cur_min
+
+    def push(self, data):
+        super().push(data)
+        if data < self.cur_min:
+            self.min_stack.push(data)
+            self.cur_min = data
+        else:
+            self.min_stack.push(self.cur_min)
+
+    def pop(self):
+        self.min_stack.pop()
+        self.cur_min = self.min_stack.peek()
+        return super().pop()
 
 
 class TestStackMin(object):
