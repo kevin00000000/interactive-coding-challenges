@@ -1,5 +1,31 @@
 from random import randint
 from nose.tools import assert_equal
+from stack import Stack, Node
+
+
+class MyStack(Stack):
+    def sort(self):
+        buff = Stack()
+        while not self.is_empty():
+            temp = self.pop()
+            if buff.is_empty() or temp>buff.peek():
+                buff.push(temp)
+            else:
+                while buff.is_empty()==False and temp<buff.peek():
+                    self.push(buff.pop())
+                buff.push(temp)
+        return buff
+
+class MyStackSimplified(Stack):
+    def sort(self):
+        buff = Stack()
+        while not self.is_empty():
+            temp = self.pop()
+            while buff.is_empty()==False and temp<buff.peek():
+                self.push(buff.pop())
+            buff.push(temp)
+        return buff
+
 
 
 class TestSortStack(object):

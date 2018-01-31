@@ -2,6 +2,54 @@ from nose.tools import assert_equal
 from nose.tools import raises
 
 
+class Stacks(object):
+
+    def __init__(self, num_stacks, stack_size):
+        self.num_stacks = num_stacks
+        self.stack_size = stack_size
+        self.tops = []
+        self.stacks = []
+        self.nexts = []
+        self.NO_VALUE = -1
+        self.NO_NEXT = -2
+        for _ in range(num_stacks):
+            self.tops.append(None)
+        for _ in range(stack_size):
+            self.nexts.append(None)
+            self.stacks.append(None)
+        self.current_size = 0
+
+    def abs_index(self, statck_index):
+        return self.tops[statck_index]
+
+    def push(self, stack_index, data):
+        if self.current_size == self.stack_size:
+            raise Exception
+        for index, value in enumerate(self.stacks):
+            if value == None:
+                self.stacks[index] = data
+                self.current_size += 1
+                break
+        if self.tops[stack_index] is not None:
+            self.nexts[index] = self.tops[stack_index]
+            self.tops[stack_index] = index
+        else:
+            self.tops[stack_index] = index
+        
+
+    def pop(self, stack_index):
+        if self.current_size == 0:
+            raise Exception
+        if self.tops[stack_index] is None:
+            raise Exception
+        data = self.stacks[self.tops[stack_index]]
+        self.stacks[self.tops[stack_index]] = None
+        self.tops[stack_index] = self.nexts[self.tops[stack_index]]
+        self.current_size -= 1
+        return data
+        
+
+
 class TestStacks(object):
 
     @raises(Exception)

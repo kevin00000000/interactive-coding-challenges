@@ -1,4 +1,26 @@
 from nose.tools import assert_equal
+from stack import Stack
+
+
+class QueueFromStacks(object):
+    def __init__(self):
+        self.enqueue_stack = Stack()
+        self.dequeue_stack = Stack()
+        self.en = True
+
+    def shift_stacks(self, source, destination):
+        while not source.is_empty():
+            destination.push(source.pop())
+    
+    def enqueue(self, data):
+        if not self.en:
+            self.shift_stacks(self.dequeue_stack, self.enqueue_stack)
+        self.enqueue_stack.push(data)
+
+    def dequeue(self):
+        if self.en:
+            self.shift_stacks(self.enqueue_stack, self.dequeue_stack)
+        return self.dequeue_stack.pop()
 
 
 class TestQueueFromStacks(object):
