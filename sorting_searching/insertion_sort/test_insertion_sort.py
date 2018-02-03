@@ -1,5 +1,20 @@
 from nose.tools import assert_equal, assert_raises
 
+class InsertionSort(object):
+    def sort(self, data):
+        if data is None:
+            raise TypeError
+        if len(data) < 2:
+            return data
+        result = []
+        for i in range(len(data)):
+            for j in range(len(result)):
+                if result[j] > data[i]:
+                    result.insert(j, data[i])
+                    break
+            else:
+                result.append(data[i])
+        return result
 
 class TestInsertionSort(object):
 

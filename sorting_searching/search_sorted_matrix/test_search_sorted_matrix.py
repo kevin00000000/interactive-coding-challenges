@@ -1,5 +1,27 @@
 from nose.tools import assert_equal, assert_raises
 
+class SortedMatrix(object):
+    
+    def find_val(self, matrix, val):
+        if matrix is None:
+            raise TypeError
+        if not matrix:
+            return None
+        return self._find_val(matrix, val, 0, len(matrix[0])-1)
+    
+    def _find_val(self, matrix, val, y, x):
+        if x > len(matrix)-1:
+            return None
+        if y > len(matrix[0])-1:
+            return None
+        if matrix[y][x] > val:
+            return self._find_val(matrix, val, y, x-1)
+        elif matrix[y][x] < val:
+            return self._find_val(matrix, val, y+1, x)
+        else:
+            return y, x
+        
+
 
 class TestSortedMatrix(object):
 

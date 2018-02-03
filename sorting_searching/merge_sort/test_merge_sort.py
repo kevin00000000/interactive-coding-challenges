@@ -1,5 +1,35 @@
 from nose.tools import assert_equal, assert_raises
 
+class MergeSort(object):
+    def sort(self, data):
+        if data is None:
+            raise TypeError
+        if len(data) < 2:
+            return data
+        left = self.sort(data[0:len(data)//2])
+        right = self.sort(data[len(data)//2:])
+        data = self._merge(left, right)
+        return data
+    
+    def _merge(self, left, right):
+        result = []
+        i = 0
+        j = 0
+        while i<len(left) or j<len(right):
+            if i==len(left):
+                result.extend(right[j:])
+                return result
+            if j==len(right):
+                result.extend(left[i:])
+                return result
+            if left[i]<right[j]:
+                result.append(left[i])
+                i+=1
+            else:
+                result.append(right[j])
+                j+=1
+        return result
+
 
 class TestMergeSort(object):
 
