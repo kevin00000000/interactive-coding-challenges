@@ -1,5 +1,30 @@
 from nose.tools import assert_equal, assert_raises
 
+class Array(object):
+    def merge_into(self, source, dest, source_end_index, dest_end_index):
+        if source is None or dest is None:
+            raise TypeError
+        if source_end_index < 0 or dest_end_index < 0:
+            raise ValueError
+        if len(dest) == 0:
+            return source
+        source_end_index -= 1
+        dest_end_index -= 1
+        none_last_index = len(source)-1
+        while dest_end_index >= 0 and source_end_index >= 0:
+            if source[source_end_index] > dest[dest_end_index]:
+                source[source_end_index], source[none_last_index] = source[none_last_index], source[source_end_index]
+                source_end_index -= 1
+                none_last_index -= 1
+            else:
+                source[none_last_index] = dest[dest_end_index]
+                none_last_index -= 1
+                dest_end_index -= 1
+        if source_end_index < 0:
+            for i in range(dest_end_index+1):
+                source[i] = dest[i]
+        return source
+
 
 class TestArray(object):
 
