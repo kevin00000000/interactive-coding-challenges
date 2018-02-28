@@ -1,5 +1,27 @@
 from nose.tools import assert_equal
 
+class Node(object):
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+class MinBst(object):
+    def __init__(self):
+        pass
+
+    def create_min_bst(self, array):
+        return self._create_min_bst(array, 0, len(array)-1)
+
+    def _create_min_bst(self, array, low, high):
+        if low > high:
+            return None
+        mid = (high-low)//2+low
+        node = Node(array[mid])
+        node.left = self._create_min_bst(array, low, mid-1)
+        node.right = self._create_min_bst(array, mid+1, high)
+        return node
+
 
 def height(node):
     if node is None:

@@ -1,6 +1,57 @@
 from nose.tools import assert_equal
 from nose.tools import raises
 
+class Node(object):
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+        self.parent = None
+
+class Bst(object):
+    def __init__(self, root=None):
+        self._root = root
+
+    @property
+    def root(self):
+        return self._root
+
+    def insert(self, data):
+        if data is None:
+            raise TypeError
+        node = Node(data)
+        self._root = self._insert(node, self._root, None)
+        return node
+    
+    def _insert(self, node, child, parent):
+        if child is None:
+            child = node
+            child.parent = parent
+        elif child.data > node.data:
+            child.left = self._insert(node, child.left, child)
+        else:
+            child.right = self._insert(node, child.right, child)
+        return child
+
+class BstSuccessor():
+    def get_next(self, node):
+        if node is None:
+            raise TypeError
+        if node.right is not None:
+            node = node.right
+            while node.left is not None:
+                node = node.left
+            return node.data
+        else:
+            parent = node.parent
+            while parent is not None and parent.left != node:
+                node = parent
+                parent = parent.parent
+            if parent is not None:
+                return parent.data
+            else:
+                return None
+
 
 class TestBstSuccessor(object):
 
