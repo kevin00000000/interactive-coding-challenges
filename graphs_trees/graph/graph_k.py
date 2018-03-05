@@ -1,5 +1,5 @@
-from nose.tools import assert_equal
-from enum import Enum
+from enum import Enum  # Python 2 users: Run pip install enum34
+
 
 class State(Enum):
 
@@ -53,7 +53,6 @@ class Graph:
         if id in self.nodes:
             return
         self.nodes[id] = Node(id)
-        return self.nodes[id]
 
     def add_edge(self, source, dest, weight=0):
         # TODO: Implement me
@@ -72,69 +71,3 @@ class Graph:
         # TODO: Implement me
         self.add_edge(source, dest, weight)
         self.add_edge(dest, source, weight)
-
-class GraphBfs(Graph):
-    def __init__(self):
-        super().__init__()
-        self.marked = {}#Key:key,Val:bool
-        self.queue = []
-    def bfs(self, root, visit_func):
-        self.queue.append(root)
-        self.marked[root.key] = True
-        while len(self.queue):
-            node = self.queue.pop(0)
-            visit_func(node)
-            for key, direced_node in node.adj_nodes.items():
-                if key not in self.marked:
-                    self.queue.append(direced_node)
-                    self.marked[key] = True
-
-
-class Results(object):
-
-    def __init__(self):
-        self.results = []
-
-    def add_result(self, result):
-        # TODO: Clean this up
-        # Simplifies challenge coding and unit testing
-        # but makes this function look less appealing
-        self.results.append(int(str(result)))
-
-    def clear_results(self):
-        self.results = []
-
-    def __str__(self):
-        return str(self.results)
-
-class TestBfs(object):
-
-    def __init__(self):
-        self.results = Results()
-
-    def test_bfs(self):
-        nodes = []
-        graph = GraphBfs()
-        for id in range(0, 6):
-            nodes.append(graph.add_node(id))
-        graph.add_edge(0, 1, 5)
-        graph.add_edge(0, 4, 3)
-        graph.add_edge(0, 5, 2)
-        graph.add_edge(1, 3, 5)
-        graph.add_edge(1, 4, 4)
-        graph.add_edge(2, 1, 6)
-        graph.add_edge(3, 2, 7)
-        graph.add_edge(3, 4, 8)
-        graph.bfs(nodes[0], self.results.add_result)
-        assert_equal(str(self.results), "[0, 1, 4, 5, 3, 2]")
-
-        print('Success: test_bfs')
-
-
-def main():
-    test = TestBfs()
-    test.test_bfs()
-
-
-if __name__ == '__main__':
-    main()
