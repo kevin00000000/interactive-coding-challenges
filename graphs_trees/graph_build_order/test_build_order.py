@@ -80,32 +80,55 @@ class BuildOrder(object):
         self.graph = Graph()
         for dep in dependencies:
             self.graph.add_edge(dep.node_key_before, dep.node_key_after)
+        self.order_list = []
         self.order = []
+        self.incoming_edges_0 = []
         self.stack = []
         self.marked = {}
+        self._find_all_0_incoming_edges()
+
+    def _find_all_0_incoming_edges(self):
+        for node in self.graph.nodes.values():
+            if node.incoming_edges == 0:
+                self.incoming_edges_0.append(node)
 
     def find_build_order(self):
         # TODO: Implement me
         try:
-            for key, node in self.graph.nodes.items():
-                if key not in self.marked:
-                    self._find_build_order(node)
+            for node in self.incoming_edges_0:
+                order = []
+                if node.key not in self.marked:
+                    self._find_build_order(node, order)
+                self.order_list.append(order)
         except ValueError:
+            return None
+        index = 0
+        while True:
+            count = 0
+            for order in self.order_list:
+                if len(order) > index:
+                    self.order.append(order[index])
+                    count += 1
+            if count == 0:
+                break
+            index += 1
+        if len(self.order) != len(self.graph.nodes):
             return None
         return self.order
         
+        
                 
     
-    def _find_build_order(self, node):
+    def _find_build_order(self, node, order):
         if node.key in self.stack:
             raise ValueError("Has Cycle")
         self.stack.append(node.key)
         self.marked[node.key] = True
         for key, next_node in node.adj_nodes.items():
             if key not in self.marked:
-                self._find_build_order(next_node)
+                self._find_build_order(next_node, order)
         self.stack.pop()
-        self.order.insert(0, node)
+        order.insert(0, node)
 
 
 class TestBuildOrder(object):
