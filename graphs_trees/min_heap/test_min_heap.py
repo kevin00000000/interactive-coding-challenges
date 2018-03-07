@@ -1,4 +1,62 @@
 from nose.tools import assert_equal
+import sys
+
+class MinHeap(object):
+
+    def __init__(self):
+        # TODO: Implement me
+        self.data = [None]
+        self.length = 0
+    
+    def __len__(self):
+        return self.length
+
+    @property
+    def array(self):
+        return self.data[1:len(self.data)]
+        
+
+    def extract_min(self):
+        # TODO: Implement me
+        if self.length == 0:
+            return None
+        result = self.data[1]
+        self.data[1], self.data[self.length] = self.data[self.length], self.data[1]
+        self.length -= 1
+        self._swim_down(1)
+        return result   
+
+    def peek_min(self):
+        # TODO: Implement me
+        if self.length == 0:
+            return None
+        result = self.data[1]
+        return result
+
+    def insert(self, data):
+        # TODO: Implement me
+        self.data.append(data)
+        self.length += 1
+        self._bubble_up(self.length)
+
+    def _bubble_up(self, index):
+        # TODO: Implement me
+        if index//2 > 0 and self.data[index] < self.data[index//2]:
+            self.data[index], self.data[index//2] = self.data[index//2], self.data[index]
+            self._bubble_up(index//2)
+    
+    def _swim_down(self, index):
+        if self.length == 0:
+            return
+        if index*2 <= self.length:
+            left = self.data[index*2]
+            right = sys.maxsize if index*2+1>self.length else self.data[index*2+1]
+            if left<right:
+                self.data[index], self.data[index*2] = self.data[index*2], self.data[index]
+                self._swim_down(index*2)
+            else:
+                self.data[index], self.data[index*2+1] = self.data[index*2+1], self.data[index]
+                self._swim_down(index*2+1)
 
 
 class TestMinHeap(object):

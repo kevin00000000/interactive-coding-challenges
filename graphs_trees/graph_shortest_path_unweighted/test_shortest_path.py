@@ -81,7 +81,7 @@ class GraphShortestPath(Graph):
         if source_key == dest_key:
             return [source_key]
         self.pre_node[source_key] = None
-        self.bfs(source_key)
+        self.bfs(self.nodes[source_key])
         if dest_key not in self.marked:
             return None
         result = []
@@ -92,15 +92,19 @@ class GraphShortestPath(Graph):
         return result
 
     def bfs(self, node):
+        self.marked.clear()
         queue = deque()
         queue.append(node)
+        self.marked[node.key] = True
         while len(queue) != 0:
             node = queue.popleft()
-            if node.key not in self.marked:
-                self.marked[node.key] = True
-                for next_node in node.adj_nodes.values():
+            for next_node in node.adj_nodes.values():
+                if next_node.key not in self.marked:
+                    self.marked[next_node.key]= True
                     self.pre_node[next_node.key] = node.key
                     queue.append(next_node)
+                
+                
 
 
 
