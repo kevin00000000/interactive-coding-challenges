@@ -1,5 +1,52 @@
 from nose.tools import assert_equal
 
+def validate_index(bit_func):
+    def validate_index_wrapper(self, *args, **kwargs):
+        for arg in args:
+            if arg<0:
+                raise ValueError
+        return bit_func(self, *args, **kwargs)
+    return validate_index_wrapper
+
+class Bit(object):
+
+    def __init__(self, number):
+        # TODO: Implement me
+        self.number = number
+
+    @validate_index
+    def get_bit(self, index):
+        # TODO: Implement me
+        return (self.number & (1<<index)) != 0
+
+    @validate_index
+    def set_bit(self, index):
+        # TODO: Implement me
+        return self.number | 1<<index
+
+    @validate_index
+    def clear_bit(self, index):
+        # TODO: Implement me
+        return self.number & ~(2**index)
+
+    @validate_index
+    def clear_bits_msb_to_index(self, index):
+        # TODO: Implement me
+        return self.number & 2**index-1
+
+    @validate_index
+    def clear_bits_index_to_lsb(self, index):
+        # TODO: Implement me
+        return self.number & ~(2**(index+1)-1)
+
+    @validate_index
+    def update_bit(self, index, value):
+        # TODO: Implement me
+        if value:
+            return self.number | 2**index
+        else:
+            return self.number & ~(2**index)
+
 
 class TestBit(object):
 
