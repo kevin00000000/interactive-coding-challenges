@@ -1,5 +1,17 @@
 from nose.tools import assert_equal
 
+class Bits(object):
+    def bits_to_flip(self, a, b):
+        if a is None or b is None:
+            raise TypeError("Invalid parameter")
+        result = a ^ b
+        count = 0
+        while result:
+            if result & 1:
+                count += 1
+            result >>= 1
+        return count
+
 
 class TestBits(object):
 
