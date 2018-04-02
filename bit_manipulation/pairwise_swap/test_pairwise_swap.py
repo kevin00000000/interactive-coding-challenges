@@ -1,5 +1,14 @@
 from nose.tools import assert_equal, assert_raises
 
+class Bits(object):
+    def pairwise_swap(self, num):
+        if num <= 1:
+            return num
+        odd = num & 0b1010101010101010
+        even = num & 0b0101010101010101
+        odd >>= 1
+        even <<= 1
+        return odd | even
 
 class TestBits(object):
 

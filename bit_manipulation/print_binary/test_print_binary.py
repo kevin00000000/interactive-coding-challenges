@@ -1,5 +1,28 @@
 from nose.tools import assert_equal
+import math
 
+class Bits(object):
+    def print_binary(self, num):
+        if num is None:
+            return 'ERROR'
+        if num >= 1 or num <= 0:
+            return 'ERROR'
+        count = 0
+        result = '0.'
+        while count < 32:
+            decimal, integer = math.modf(num*2)
+            if integer == 1:
+                result += "1"
+            else:
+                result += '0'
+            count += 1
+            if decimal == 0.0:
+                break
+            num = decimal
+        if count >= 32:
+            return 'ERROR'
+        return result
+            
 
 class TestBits(object):
 

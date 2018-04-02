@@ -1,5 +1,16 @@
 from nose.tools import assert_equal
 
+class Bits(object):
+    def insert_m_into_n(self, m, n, i, j):
+        if m is None or n is None or i is None or j is None:
+            raise TypeError('param is None')
+        if i > j:
+            raise ValueError("invalid param")
+        count = j - i + 1
+        m &= ((1<<count)-1)
+        n &= ~(((1<<count)-1)<<i)
+        m <<= i
+        return m | n
 
 class TestBit(object):
 
