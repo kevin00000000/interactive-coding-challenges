@@ -1,7 +1,7 @@
 from nose.tools import assert_equal
 
 
-class solution(object):
+class MakeChange(object):
 
     def __init__(self):
         self.result = {}
@@ -11,7 +11,7 @@ class solution(object):
             raise TypeError('invalid param')
         if not coins or not total:
             return 0
-        self._init_result(len(coins), total)
+        self._init_result(len(coins))
         self._fill_result(coins, len(coins), total)
         return self.result[len(coins)][total]
 
@@ -19,7 +19,24 @@ class solution(object):
         for _ in range(n+1):
             self.result[_] = {}
 
-    
+    def _fill_result(self, coins, n, total):
+        for i in range(n+1):
+            for t in range(total+1):
+                if not t:
+                    self.result[i][t] = 1
+                    continue
+                if not i :
+                    self.result[i][t] = 0
+                    continue
+                if coins[i-1] <= t:
+                    self.result[i][t] = self.result[i][t-coins[i-1]] + self.result[i-1][t]
+                else:
+                    self.result[i][t] = self.result[i-1][t]
+
+
+def change_ways(total, coins):
+    return MakeChange().make_change(coins, total)
+
 
 
 class Challenge(object):
